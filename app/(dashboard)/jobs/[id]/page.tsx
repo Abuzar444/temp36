@@ -10,15 +10,11 @@ import {
 async function JobDetailPage({ params }: { params: { id: string } }) {
   const queryClient = new QueryClient();
 
-  try {
-    await queryClient.prefetchQuery({
-      queryKey: ["job", params.id],
-      queryFn: () => getSingleJobAction(params.id),
-    });
-  } catch (error) {
-    console.error("Unexpected error:", error);
-    // Handle unexpected error (e.g., display generic error message)
-  }
+  await queryClient.prefetchQuery({
+    queryKey: ["job", params.id],
+    queryFn: () => getSingleJobAction(params.id),
+  });
+
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <EditJobForm jobId={params.id} />
