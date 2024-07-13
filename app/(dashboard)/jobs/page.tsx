@@ -7,11 +7,12 @@ import {
 } from "@tanstack/react-query";
 import { getAllJobsAction } from "@/utils/actions";
 
-async function AllJobsPage() {
+async function JobsPage() {
   const queryClient = new QueryClient();
-
-  await queryClient.prefetchQuery({
-    queryKey: ["jobs", "", "all", 1],
+  // pre-fetching our data
+  await queryClient.fetchQuery({
+    queryKey: ["jobs", "", "all"],
+    // we are passing the empty object
     queryFn: () => getAllJobsAction({}),
   });
   return (
@@ -21,5 +22,4 @@ async function AllJobsPage() {
     </HydrationBoundary>
   );
 }
-
-export default AllJobsPage;
+export default JobsPage;
